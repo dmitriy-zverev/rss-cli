@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/dmitriy-zverev/rss-cli/internal/command"
 	"github.com/dmitriy-zverev/rss-cli/internal/config"
 )
 
@@ -14,13 +15,16 @@ func main() {
 		os.Exit(1)
 	}
 
-	userConfig.SetUser(config.ADMIN_USERNAME)
+	userState := command.State{Cfg: &userConfig}
+	userCommands := command.Commands{}
 
-	userConfig, err = config.Read()
-	if err != nil {
-		fmt.Printf("error reading config: %v\n", err)
+	userCommands.Register(command.LOGIN_CMD, command.HandlerLogin)
+
+	if len(os.Args) < 2 {
+		fmt.Println("error: you did not specify user login")
 		os.Exit(1)
 	}
 
-	fmt.Println(userConfig)
+	userCommand := command.Command{Name: os.Args[1], Args: os.Args[1:]}
+	userCommands.Run(&userState, userCommand)
 }
