@@ -10,15 +10,9 @@ import (
 	"github.com/google/uuid"
 )
 
-func HandlerAddFeed(s *State, cmd Command) error {
+func HandlerAddFeed(s *State, cmd Command, user database.User) error {
 	if len(cmd.Args) < 3 {
 		return errors.New("cannot add empty feed")
-	}
-
-	userName := s.Cfg.CurrentUserName
-	userID, err := s.Db.GetUserID(context.Background(), userName)
-	if err != nil {
-		return errors.New("user with provided login was not found")
 	}
 
 	feedName := cmd.Args[1]
@@ -30,7 +24,7 @@ func HandlerAddFeed(s *State, cmd Command) error {
 		UpdatedAt: time.Now().UTC(),
 		Name:      feedName,
 		Url:       feedURL,
-		UserID:    userID,
+		UserID:    user.ID,
 	}
 	if _, err := s.Db.CreateFeed(context.Background(), feedRow); err != nil {
 		return errors.New("cannot insert row to database")
@@ -39,7 +33,7 @@ func HandlerAddFeed(s *State, cmd Command) error {
 	if err := HandlerFollow(s, Command{
 		Name: FOLLOW_CMD,
 		Args: []string{FOLLOW_CMD, feedURL},
-	}); err != nil {
+	}, user); err != nil {
 		return err
 	}
 

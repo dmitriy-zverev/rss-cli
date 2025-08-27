@@ -4,16 +4,13 @@ import (
 	"context"
 	"errors"
 	"fmt"
+
+	"github.com/dmitriy-zverev/rss-cli/internal/database"
 )
 
-func HandlerFollowing(s *State, cmd Command) error {
+func HandlerFollowing(s *State, cmd Command, user database.User) error {
 	if len(cmd.Args) < 1 {
 		return errors.New("you did not specify command")
-	}
-
-	user, err := s.Db.GetUser(context.Background(), s.Cfg.CurrentUserName)
-	if err != nil {
-		return err
 	}
 
 	feeds, err := s.Db.GetFeedFollowsForUser(context.Background(), user.ID)

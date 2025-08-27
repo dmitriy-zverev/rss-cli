@@ -10,14 +10,9 @@ import (
 	"github.com/google/uuid"
 )
 
-func HandlerFollow(s *State, cmd Command) error {
+func HandlerFollow(s *State, cmd Command, user database.User) error {
 	if len(cmd.Args) < 2 {
 		return errors.New("cannot follow empty feed URL")
-	}
-
-	user, err := s.Db.GetUser(context.Background(), s.Cfg.CurrentUserName)
-	if err != nil {
-		return err
 	}
 
 	feedURL := cmd.Args[1]
