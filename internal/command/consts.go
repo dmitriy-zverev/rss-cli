@@ -10,4 +10,5 @@ const (
 	LIST_FEEDS_CMD = "feeds"
 	FOLLOW_CMD     = "follow"
 	FOLLOWING_CMD  = "following"
+	UNFOLLOW_CMD   = "unfollow"
 )

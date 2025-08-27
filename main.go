@@ -50,4 +50,5 @@ func registerUserCommands(cmds *command.Commands) {
 	cmds.Register(command.LIST_FEEDS_CMD, command.HandlerListFeeds)
 	cmds.Register(command.FOLLOW_CMD, command.MiddlewareLoggedIn(command.HandlerFollow))
 	cmds.Register(command.FOLLOWING_CMD, command.MiddlewareLoggedIn(command.HandlerFollowing))
+	cmds.Register(command.UNFOLLOW_CMD, command.MiddlewareLoggedIn(command.HandlerUnfollow))
 }
