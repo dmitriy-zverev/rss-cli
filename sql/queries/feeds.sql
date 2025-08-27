@@ -19,3 +19,7 @@ SELECT * FROM feeds;
 
 -- name: ResetFeeds :exec
 DELETE FROM feeds;
+
+-- name: GetFeedIDByURL :one
+SELECT id FROM feeds
+WHERE url = $1;

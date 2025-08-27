@@ -48,4 +48,6 @@ func registerUserCommands(cmds *command.Commands) {
 	cmds.Register(command.AGG_CMD, command.HandlerAggregate)
 	cmds.Register(command.ADD_FEED_CMD, command.HandlerAddFeed)
 	cmds.Register(command.LIST_FEEDS_CMD, command.HandlerListFeeds)
+	cmds.Register(command.FOLLOW_CMD, command.HandlerFollow)
+	cmds.Register(command.FOLLOWING_CMD, command.HandlerFollowing)
 }

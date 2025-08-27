@@ -8,4 +8,6 @@ const (
 	AGG_CMD        = "agg"
 	ADD_FEED_CMD   = "addfeed"
 	LIST_FEEDS_CMD = "feeds"
+	FOLLOW_CMD     = "follow"
+	FOLLOWING_CMD  = "following"
 )

@@ -36,14 +36,18 @@ func HandlerAddFeed(s *State, cmd Command) error {
 		return errors.New("cannot insert row to database")
 	}
 
-	fmt.Printf("Feed %s with address (%s) was successfully added!\n", feedName, feedURL)
-
-	newFeed, err := s.Db.GetFeed(context.Background(), feedName)
-	if err != nil {
-		return errors.New("feed has beed added unsuccessfully")
+	if err := HandlerFollow(s, Command{
+		Name: FOLLOW_CMD,
+		Args: []string{FOLLOW_CMD, feedURL},
+	}); err != nil {
+		return err
 	}
 
-	fmt.Println(newFeed)
+	fmt.Printf("Feed '%s' (%s) was successfully added!\n", feedName, feedURL)
+
+	if _, err := s.Db.GetFeed(context.Background(), feedName); err != nil {
+		return errors.New("feed has beed added unsuccessfully")
+	}
 
 	return nil
 }
