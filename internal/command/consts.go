@@ -5,4 +5,5 @@ const (
 	REGISTER_CMD   = "register"
 	RESET_CMD      = "reset"
 	LIST_USERS_CMD = "users"
+	AGG_CMD        = "agg"
 )

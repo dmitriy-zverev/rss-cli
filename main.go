@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"database/sql"
 	"fmt"
 	"os"
@@ -8,6 +9,7 @@ import (
 	"github.com/dmitriy-zverev/rss-cli/internal/command"
 	"github.com/dmitriy-zverev/rss-cli/internal/config"
 	"github.com/dmitriy-zverev/rss-cli/internal/database"
+	"github.com/dmitriy-zverev/rss-cli/internal/rssfeed"
 	_ "github.com/lib/pq"
 )
 
@@ -33,6 +35,7 @@ func main() {
 	userCommands.Register(command.REGISTER_CMD, command.HandlerRegister)
 	userCommands.Register(command.RESET_CMD, command.HandlerReset)
 	userCommands.Register(command.LIST_USERS_CMD, command.HandlerListUsers)
+	userCommands.Register(command.AGG_CMD, command.HandlerAggregate)
 
 	if len(os.Args) < 2 {
 		fmt.Println("error: you did not specify user login")
@@ -41,4 +44,13 @@ func main() {
 
 	userCommand := command.Command{Name: os.Args[1], Args: os.Args[1:]}
 	userCommands.Run(&userState, userCommand)
+
+	items, _ := rssfeed.FetchFeed(context.Background(), "https://www.wagslane.dev/index.xml")
+	fmt.Println("Channel Title:", items.Channel.Title)
+	fmt.Println("Description:", items.Channel.Description)
+
+	for _, item := range items.Channel.Item {
+		fmt.Println("Title:", item.Title)
+		fmt.Println("Description:", item.Description)
+	}
 }
