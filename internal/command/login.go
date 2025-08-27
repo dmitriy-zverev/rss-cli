@@ -8,7 +8,7 @@ import (
 
 func HandlerLogin(s *State, cmd Command) error {
 	if len(cmd.Args) < 2 {
-		return errors.New("error: cannot login with empty username")
+		return errors.New("cannot login with empty username")
 	}
 
 	userName := cmd.Args[1]
