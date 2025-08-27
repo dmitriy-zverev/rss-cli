@@ -6,4 +6,6 @@ const (
 	RESET_CMD      = "reset"
 	LIST_USERS_CMD = "users"
 	AGG_CMD        = "agg"
+	ADD_FEED_CMD   = "addfeed"
+	LIST_FEEDS_CMD = "feeds"
 )
