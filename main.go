@@ -1,11 +1,14 @@
 package main
 
 import (
+	"database/sql"
 	"fmt"
 	"os"
 
 	"github.com/dmitriy-zverev/rss-cli/internal/command"
 	"github.com/dmitriy-zverev/rss-cli/internal/config"
+	"github.com/dmitriy-zverev/rss-cli/internal/database"
+	_ "github.com/lib/pq"
 )
 
 func main() {
@@ -15,10 +18,19 @@ func main() {
 		os.Exit(1)
 	}
 
-	userState := command.State{Cfg: &userConfig}
+	db, err := sql.Open("postgres", userConfig.DBUrl)
+	if err != nil {
+		fmt.Printf("error connecting to database: %v\n", err)
+		os.Exit(1)
+	}
+
+	dbQueries := database.New(db)
+
+	userState := command.State{Cfg: &userConfig, Db: dbQueries}
 	userCommands := command.Commands{}
 
 	userCommands.Register(command.LOGIN_CMD, command.HandlerLogin)
+	userCommands.Register(command.REGISTER_CMD, command.HandlerRegister)
 
 	if len(os.Args) < 2 {
 		fmt.Println("error: you did not specify user login")

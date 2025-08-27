@@ -1,6 +1,7 @@
 package command
 
 import (
+	"context"
 	"errors"
 	"fmt"
 )
@@ -10,11 +11,16 @@ func HandlerLogin(s *State, cmd Command) error {
 		return errors.New("error: cannot login with empty username")
 	}
 
-	if err := s.Cfg.SetUser(cmd.Args[1]); err != nil {
+	userName := cmd.Args[1]
+	if _, err := s.Db.GetUser(context.Background(), userName); err != nil {
+		return errors.New("user with provided login was not found")
+	}
+
+	if err := s.Cfg.SetUser(userName); err != nil {
 		return err
 	}
 
-	fmt.Printf("The user %s has been set\n", cmd.Args[1])
+	fmt.Printf("Hello %s! Welcome back\n", userName)
 
 	return nil
 }
