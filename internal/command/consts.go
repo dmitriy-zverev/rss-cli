@@ -1,7 +1,8 @@
 package command
 
 const (
-	LOGIN_CMD    = "login"
-	REGISTER_CMD = "register"
-	RESET_CMD    = "reset"
+	LOGIN_CMD      = "login"
+	REGISTER_CMD   = "register"
+	RESET_CMD      = "reset"
+	LIST_USERS_CMD = "users"
 )

@@ -32,6 +32,7 @@ func main() {
 	userCommands.Register(command.LOGIN_CMD, command.HandlerLogin)
 	userCommands.Register(command.REGISTER_CMD, command.HandlerRegister)
 	userCommands.Register(command.RESET_CMD, command.HandlerReset)
+	userCommands.Register(command.LIST_USERS_CMD, command.HandlerListUsers)
 
 	if len(os.Args) < 2 {
 		fmt.Println("error: you did not specify user login")
