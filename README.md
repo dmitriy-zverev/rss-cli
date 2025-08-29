@@ -9,7 +9,7 @@ This is an RSS feed aggregator in Go. It allows users to add RSS feeds from acro
 1. Run the command:
 ```
 go install github.com/dmitriy-zverev/rss-cli@latest
-ln -s $(which rss-cli) ~/bin/gator
+mv $(which rss-cli) ~/go/bin/gator
 ```
 2. Start the Postgres service with: `brew services start postgresql@15` if on macOS.
 3. Change the config in your HOME directory named `.gatorconfig.json` and instead of `username` use your computer username.
