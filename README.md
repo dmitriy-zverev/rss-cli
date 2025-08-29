@@ -4,12 +4,14 @@ This is an RSS feed aggregator in Go. It allows users to add RSS feeds from acro
 ## Requirments
 * Postgres 15.0 (or newer)
 * Golang 12.4.5 (or newer)
+* Goose 3.25.0 (or newer)
 
 ## How to install
 1. Run the command:
 ```
 go install github.com/dmitriy-zverev/rss-cli@latest
 mv $(which rss-cli) ~/go/bin/gator
+goose postgres postgres://YOURUSERNAME:@localhost:5432/gator up
 ```
 2. Start the Postgres service with: `brew services start postgresql@15` if on macOS.
 3. Change the config in your HOME directory named `.gatorconfig.json` and instead of `username` use your computer username.
