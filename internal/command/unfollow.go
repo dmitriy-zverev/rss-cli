@@ -14,10 +14,14 @@ func HandlerUnfollow(s *State, cmd Command, user database.User) error {
 	}
 
 	feedURL := cmd.Args[1]
+	feedID, err := s.Db.GetFeedIDByURL(context.Background(), feedURL)
+	if err != nil {
+		return err
+	}
 
 	feedUnfollowParams := database.DeleteFeedFollowsForUserParams{
-		Url:    feedURL,
 		UserID: user.ID,
+		FeedID: feedID,
 	}
 
 	if err := s.Db.DeleteFeedFollowsForUser(context.Background(), feedUnfollowParams); err != nil {

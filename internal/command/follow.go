@@ -34,7 +34,7 @@ func HandlerFollow(s *State, cmd Command, user database.User) error {
 		return err
 	}
 
-	fmt.Printf("%s - %s\n", createdFeed.UserName, createdFeed.FeedName)
+	fmt.Printf("%s is following %s\n", createdFeed.UserName, createdFeed.FeedName)
 
 	return nil
 }

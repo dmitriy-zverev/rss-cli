@@ -36,6 +36,8 @@ func main() {
 		os.Exit(1)
 	}
 
+	go command.HandlerAggregate(&userState, command.TIME_DELAY_FOR_FETCHING)
+
 	userCommand := command.Command{Name: os.Args[1], Args: os.Args[1:]}
 	userCommands.Run(&userState, userCommand)
 }
@@ -45,10 +47,10 @@ func registerUserCommands(cmds *command.Commands) {
 	cmds.Register(command.REGISTER_CMD, command.HandlerRegister)
 	cmds.Register(command.RESET_CMD, command.HandlerReset)
 	cmds.Register(command.LIST_USERS_CMD, command.HandlerListUsers)
-	cmds.Register(command.AGG_CMD, command.HandlerAggregate)
 	cmds.Register(command.ADD_FEED_CMD, command.MiddlewareLoggedIn(command.HandlerAddFeed))
 	cmds.Register(command.LIST_FEEDS_CMD, command.HandlerListFeeds)
 	cmds.Register(command.FOLLOW_CMD, command.MiddlewareLoggedIn(command.HandlerFollow))
 	cmds.Register(command.FOLLOWING_CMD, command.MiddlewareLoggedIn(command.HandlerFollowing))
 	cmds.Register(command.UNFOLLOW_CMD, command.MiddlewareLoggedIn(command.HandlerUnfollow))
+	cmds.Register(command.BROWSE_CMD, command.MiddlewareLoggedIn(command.HandlerBrowse))
 }

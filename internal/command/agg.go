@@ -1,27 +1,21 @@
 package command
 
 import (
-	"context"
-	"errors"
 	"fmt"
-
-	"github.com/dmitriy-zverev/rss-cli/internal/rssfeed"
+	"time"
 )
 
-func HandlerAggregate(s *State, cmd Command) error {
-	if len(cmd.Args) < 1 {
-		return errors.New("you did not specify command")
-	}
-
-	fmt.Println("Getting RSS Feed...")
-
-	rssFeed, err := rssfeed.FetchFeed(context.Background(), "https://www.wagslane.dev/index.xml")
+func HandlerAggregate(s *State, time_between_reqs string) error {
+	timeDuration, err := time.ParseDuration(time_between_reqs)
 	if err != nil {
-		return errors.New("cannot get rss feed")
+		return err
 	}
 
-	fmt.Println("Got it!")
-	fmt.Println(rssFeed)
+	fmt.Printf("\nCollecting feeds every %v\n\n", timeDuration)
+	fmt.Printf("——————————————————————————\n\n")
 
-	return nil
+	ticker := time.NewTicker(timeDuration)
+	for ; ; <-ticker.C {
+		scrapeFeeds(s)
+	}
 }
