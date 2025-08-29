@@ -106,4 +106,4 @@ The database has been reset
 ```
 
 ## Found a Bug
-Text me: [https://t.me/zverev_dmitry](https://t.me/zverev_dmitry)
+Text me: [Telegram](https://t.me/zverev_dmitry)
